@@ -1,5 +1,5 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import LayoutFlat from '../layouts/LayoutFlat.astro';
 import { content, type Lang } from '../i18n';
 
 interface Props {
@@ -7,28 +7,63 @@ interface Props {
 }
 const { lang } = Astro.props;
 const t = content[lang];
-const home = lang === 'es' ? '/es/' : '/';
+const home = lang === 'es' ? '/es/b/' : '/b/';
 ---
 
-<Layout lang={lang}>
-  <nav class="nav glass">
-    <a class="nav-brand" href={home}>diego<span>.tf</span></a>
-    <div class="nav-links">
-      <a href="#work">{t.nav.work}</a>
-      <a href="#about">{t.nav.about}</a>
-      <a href="#experience">{t.nav.experience}</a>
-      <a href="#contact">{t.nav.contact}</a>
-    </div>
-    <div class="lang">
-      <a href="/" aria-current={lang === 'en'} hreflang="en">EN</a>
-      <a href="/es/" aria-current={lang === 'es'} hreflang="es">ES</a>
+<LayoutFlat lang={lang}>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="nav-brand" href={home}>diego<span>.tf</span></a>
+      <div class="nav-links">
+        <a href="#work">{t.nav.work}</a>
+        <a href="#about">{t.nav.about}</a>
+        <a href="#experience">{t.nav.experience}</a>
+        <a href="#contact">{t.nav.contact}</a>
+      </div>
+      <div class="lang">
+        <a href="/b/" aria-current={lang === 'en'} hreflang="en">EN</a>
+        <a href="/es/b/" aria-current={lang === 'es'} hreflang="es">ES</a>
+      </div>
     </div>
   </nav>
 
   <header class="hero">
-    <div class="wrap hero-grid">
-      <div class="hero-copy">
-      <div class="badge glass">
+    <!-- monstera -->
+    <div class="plant p1" aria-hidden="true">
+      <svg viewBox="0 0 200 270">
+        <path d="M100 268V44" stroke="currentColor" stroke-width="7" fill="none" />
+        <path d="M100 26C28 68 18 152 100 242 182 152 172 68 100 26Z" />
+        <g stroke="var(--cream)" stroke-width="8" stroke-linecap="round" fill="none">
+          <path d="M95 74H44" />
+          <path d="M95 112H30" />
+          <path d="M95 150H33" />
+          <path d="M95 188H50" />
+          <path d="M105 74h51" />
+          <path d="M105 112h65" />
+          <path d="M105 150h62" />
+          <path d="M105 188h45" />
+        </g>
+      </svg>
+    </div>
+    <!-- fern -->
+    <div class="plant p2" aria-hidden="true">
+      <svg viewBox="0 0 120 240">
+        <path d="M58 240c0-70 2-140 8-210 2 70 0 140-2 210z" />
+        <g opacity=".85">
+          <path d="M62 44c10-12 24-19 40-20-12 9-20 22-24 36-8-4-13-9-16-16z" />
+          <path d="M60 78c11-13 26-21 43-22-13 10-22 24-26 39-8-4-14-10-17-17z" />
+          <path d="M58 114c11-13 27-21 44-22-13 10-22 24-27 40-8-5-14-11-17-18z" />
+          <path d="M56 152c11-13 27-22 45-23-14 11-23 25-28 41-8-5-14-11-17-18z" />
+          <path d="M58 44C48 32 34 25 18 24c12 9 20 22 24 36 8-4 13-9 16-16z" />
+          <path d="M60 78C49 65 34 57 17 56c13 10 22 24 26 39 8-4 14-10 17-17z" />
+          <path d="M62 114c-11-13-27-21-44-22 13 10 22 24 27 40 8-5 14-11 17-18z" />
+          <path d="M64 152c-11-13-27-22-45-23 14 11 23 25 28 41 8-5 14-11 17-18z" />
+        </g>
+      </svg>
+    </div>
+
+    <div class="wrap hero-copy">
+      <div class="badge">
         <span class="dot"></span>
         {t.hero.badge}
       </div>
@@ -46,50 +81,13 @@ const home = lang === 'es' ? '/es/' : '/';
         </a>
         <a class="btn btn-ghost" href={`mailto:${t.contact.email}`}>{t.hero.ctaAlt}</a>
       </div>
-      </div>
-
-      <div class="cube-stage" aria-hidden="true">
-        <div class="cube">
-          <span class="face fr">
-            <svg viewBox="0 0 24 24"><path d="M9 6 3 12l6 6M15 6l6 6-6 6" /></svg>
-          </span>
-          <span class="face bk">
-            <svg viewBox="0 0 24 24">
-              <path d="M9 4H8a2 2 0 0 0-2 2v3a2 2 0 0 1-2 2 2 2 0 0 1 2 2v3a2 2 0 0 0 2 2h1" />
-              <path d="M15 4h1a2 2 0 0 1 2 2v3a2 2 0 0 0 2 2 2 2 0 0 0-2 2v3a2 2 0 0 1-2 2h-1" />
-            </svg>
-          </span>
-          <span class="face rt">
-            <svg viewBox="0 0 24 24">
-              <ellipse cx="12" cy="6" rx="7" ry="3" />
-              <path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6" />
-            </svg>
-          </span>
-          <span class="face lf">
-            <svg viewBox="0 0 24 24">
-              <circle cx="7" cy="5" r="2.3" />
-              <circle cx="7" cy="19" r="2.3" />
-              <circle cx="17" cy="12" r="2.3" />
-              <path d="M7 7.3v9.4M9.3 5H12a2.7 2.7 0 0 1 2.7 2.7v2" />
-            </svg>
-          </span>
-          <span class="face tp">
-            <svg viewBox="0 0 24 24"><path d="m5 8 4 4-4 4M12 16h7" /></svg>
-          </span>
-          <span class="face bt">
-            <svg viewBox="0 0 24 24">
-              <path d="M17.5 19a4.5 4.5 0 0 0 .5-9 6 6 0 0 0-11.6-1.6A4 4 0 0 0 6.5 19Z" />
-            </svg>
-          </span>
-        </div>
-      </div>
     </div>
   </header>
 
-  <section class="stats-section" style="padding-top:0">
+  <section style="padding-top:0">
     <div class="wrap stats">
       {t.stats.map((s, i) => (
-        <div class="stat glass reveal" style={`--d:${i * 0.07}s`}>
+        <div class="stat reveal" style={`--d:${i * 0.07}s`}>
           <div class="v">{s.value}</div>
           <div class="l">{s.label}</div>
           <div class="n">{s.note}</div>
@@ -106,7 +104,7 @@ const home = lang === 'es' ? '/es/' : '/';
       </div>
       <div class="work-grid">
         {t.work.items.map((p, i) => (
-          <article class="card glass reveal" style={`--d:${(i % 2) * 0.09}s`}>
+          <article class="card reveal" style={`--d:${(i % 2) * 0.09}s`}>
             <div class="card-top">
               <span>{p.type}</span>
               <span>{p.year}</span>
@@ -136,12 +134,12 @@ const home = lang === 'es' ? '/es/' : '/';
         <h2 class="section-title">{t.about.title}</h2>
       </div>
       <div class="about-grid">
-        <div class="prose glass reveal">
+        <div class="prose reveal">
           {t.about.body.map((para) => (
             <p>{para}</p>
           ))}
         </div>
-        <div class="skills glass reveal" style="--d:.09s">
+        <div class="skills reveal" style="--d:.09s">
           <h3>{t.about.skills.title}</h3>
           {t.about.skills.groups.map((g) => (
             <div class="skill-group">
@@ -166,7 +164,7 @@ const home = lang === 'es' ? '/es/' : '/';
       </div>
       <div class="timeline">
         {t.experience.items.map((job) => (
-          <article class="job glass reveal">
+          <article class="job reveal">
             <div class="job-head">
               <h3>{job.role}</h3>
               <div class="org">{job.org}</div>
@@ -179,7 +177,7 @@ const home = lang === 'es' ? '/es/' : '/';
             </ul>
           </article>
         ))}
-        <div class="edu glass reveal">
+        <div class="edu reveal">
           <div class="t">{t.experience.education.title}</div>
           <div class="d">{t.experience.education.degree}</div>
           <div class="s">{t.experience.education.school}</div>
@@ -191,8 +189,19 @@ const home = lang === 'es' ? '/es/' : '/';
 
   <section id="contact">
     <div class="wrap">
-      <div class="contact-card glass reveal">
-        <div class="kicker" style="margin-bottom:0">{t.contact.kicker}</div>
+      <div class="contact-card reveal">
+        <div class="plant p3" aria-hidden="true">
+          <svg viewBox="0 0 120 240">
+            <path d="M58 240c0-70 2-140 8-210 2 70 0 140-2 210z" />
+            <g opacity=".85">
+              <path d="M62 60c10-12 24-19 40-20-12 9-20 22-24 36-8-4-13-9-16-16z" />
+              <path d="M60 100c11-13 26-21 43-22-13 10-22 24-26 39-8-4-14-10-17-17z" />
+              <path d="M58 60C48 48 34 41 18 40c12 9 20 22 24 36 8-4 13-9 16-16z" />
+              <path d="M60 100C49 87 34 79 17 78c13 10 22 24 26 39 8-4 14-10 17-17z" />
+            </g>
+          </svg>
+        </div>
+        <div class="kicker">{t.contact.kicker}</div>
         <h2>{t.contact.title}</h2>
         <p>{t.contact.body}</p>
         <a class="mail" href={`mailto:${t.contact.email}`}>{t.contact.email}</a>
@@ -208,4 +217,4 @@ const home = lang === 'es' ? '/es/' : '/';
   <footer>
     <div class="wrap">© {new Date().getFullYear()} Diego Treviño · {t.footer}</div>
   </footer>
-</Layout>
+</LayoutFlat>

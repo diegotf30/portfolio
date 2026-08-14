@@ -142,8 +142,9 @@ export const content = {
       body: 'Open to freelance work, contract engineering, and interesting full-time roles. Fastest way to reach me is email.',
       email: 'hola@diego.tf',
       links: [
-        { label: 'LinkedIn', href: 'https://linkedin.com/in/diegotrev' },
+        { label: 'LinkedIn', href: 'https://www.linkedin.com/in/diegotrev/' },
         { label: 'GitHub', href: 'https://github.com/diegotf30' },
+        { label: 'Instagram', href: 'https://www.instagram.com/diegotf30/' },
         { label: 'lab404', href: 'https://lab404.org' },
       ],
     },
@@ -290,8 +291,9 @@ export const content = {
       body: 'Abierto a freelance, contratos de ingeniería y roles de tiempo completo interesantes. Lo más rápido es el correo.',
       email: 'hola@diego.tf',
       links: [
-        { label: 'LinkedIn', href: 'https://linkedin.com/in/diegotrev' },
+        { label: 'LinkedIn', href: 'https://www.linkedin.com/in/diegotrev/' },
         { label: 'GitHub', href: 'https://github.com/diegotf30' },
+        { label: 'Instagram', href: 'https://www.instagram.com/diegotf30/' },
         { label: 'lab404', href: 'https://lab404.org' },
       ],
     },
