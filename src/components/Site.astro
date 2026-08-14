@@ -1,0 +1,173 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { content, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = content[lang];
+const home = lang === 'es' ? '/es/' : '/';
+---
+
+<Layout lang={lang}>
+  <nav class="nav glass">
+    <a class="nav-brand" href={home}>diego<span>.tf</span></a>
+    <div class="nav-links">
+      <a href="#work">{t.nav.work}</a>
+      <a href="#about">{t.nav.about}</a>
+      <a href="#experience">{t.nav.experience}</a>
+      <a href="#contact">{t.nav.contact}</a>
+    </div>
+    <div class="lang">
+      <a href="/" aria-current={lang === 'en'} hreflang="en">EN</a>
+      <a href="/es/" aria-current={lang === 'es'} hreflang="es">ES</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap">
+      <div class="badge glass">
+        <span class="dot"></span>
+        {t.hero.badge}
+      </div>
+      <h1>
+        {t.hero.title.map((line) => (
+          <span class="line"><span>{line}</span></span>
+        ))}
+      </h1>
+      <p class="hero-role reveal">{t.hero.role}</p>
+      <p class="hero-lede reveal" style="--d:.06s">{t.hero.lede}</p>
+      <p class="hero-meta reveal" style="--d:.12s">{t.hero.location}</p>
+      <div class="hero-cta reveal" style="--d:.18s">
+        <a class="btn btn-primary" href="#work">
+          {t.hero.cta}<span class="arrow">→</span>
+        </a>
+        <a class="btn btn-ghost" href={`mailto:${t.contact.email}`}>{t.hero.ctaAlt}</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="stats-section" style="padding-top:0">
+    <div class="wrap stats">
+      {t.stats.map((s, i) => (
+        <div class="stat glass reveal" style={`--d:${i * 0.07}s`}>
+          <div class="v">{s.value}</div>
+          <div class="l">{s.label}</div>
+          <div class="n">{s.note}</div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="kicker">{t.work.kicker}</div>
+        <h2 class="section-title">{t.work.title}</h2>
+      </div>
+      <div class="work-grid">
+        {t.work.items.map((p, i) => (
+          <article class="card glass reveal" style={`--d:${(i % 2) * 0.09}s`}>
+            <div class="card-top">
+              <span>{p.type}</span>
+              <span>{p.year}</span>
+            </div>
+            <h3>{p.name}</h3>
+            <p>{p.summary}</p>
+            {p.link && (
+              <a class="card-link" href={p.link} target="_blank" rel="noopener noreferrer">
+                {p.linkLabel}<span class="arrow">↗</span>
+              </a>
+            )}
+            <div class="tags">
+              {p.tags.map((tag) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="kicker">{t.about.kicker}</div>
+        <h2 class="section-title">{t.about.title}</h2>
+      </div>
+      <div class="about-grid">
+        <div class="prose glass reveal">
+          {t.about.body.map((para) => (
+            <p>{para}</p>
+          ))}
+        </div>
+        <div class="skills glass reveal" style="--d:.09s">
+          <h3>{t.about.skills.title}</h3>
+          {t.about.skills.groups.map((g) => (
+            <div class="skill-group">
+              <div>{g.label}</div>
+              <div class="tags" style="margin-top:0;padding-top:0">
+                {g.items.map((s) => (
+                  <span class="tag">{s}</span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="kicker">{t.experience.kicker}</div>
+        <h2 class="section-title">{t.experience.title}</h2>
+      </div>
+      <div class="timeline">
+        {t.experience.items.map((job) => (
+          <article class="job glass reveal">
+            <div class="job-head">
+              <h3>{job.role}</h3>
+              <div class="org">{job.org}</div>
+              <div class="period">{job.period} · {job.place}</div>
+            </div>
+            <ul>
+              {job.points.map((pt) => (
+                <li>{pt}</li>
+              ))}
+            </ul>
+          </article>
+        ))}
+        <div class="edu glass reveal">
+          <div class="t">{t.experience.education.title}</div>
+          <div class="d">{t.experience.education.degree}</div>
+          <div class="s">{t.experience.education.school}</div>
+          <div class="m">{t.experience.education.detail}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact-card glass reveal">
+        <div class="kicker" style="margin-bottom:0">{t.contact.kicker}</div>
+        <h2>{t.contact.title}</h2>
+        <p>{t.contact.body}</p>
+        <a class="mail" href={`mailto:${t.contact.email}`}>{t.contact.email}</a>
+        <div class="social">
+          {t.contact.links.map((l) => (
+            <a href={l.href} target="_blank" rel="noopener noreferrer">{l.label}</a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">© {new Date().getFullYear()} Diego Treviño · {t.footer}</div>
+  </footer>
+</Layout>
