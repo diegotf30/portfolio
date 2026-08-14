@@ -10,21 +10,14 @@ export const content = {
     },
     nav: { work: 'Work', about: 'About', experience: 'Experience', contact: 'Contact' },
     hero: {
-      badge: 'Ex-Google · Core Data',
       title: ['Diego', 'Treviño'],
       role: 'Software Engineer',
       lede:
-        'I spent four years at Google keeping planet-scale systems fast, cheap, and boringly reliable. Now I build products end to end for the people who need them.',
+        'I spent four years at Google keeping planet-scale systems fast, cheap, and boringly reliable. Now I build products end-to-end for the people who need them.',
       cta: 'See the work',
       ctaAlt: 'Get in touch',
-      location: 'New York, NY · Available for work',
+      location: 'Available for work',
     },
-    stats: [
-      { value: '150M', label: 'QPS served', note: 'Globally distributed, 99.99% availability' },
-      { value: '90%', label: 'Storage cost cut', note: 'New serving strategy, <50ms latency SLO' },
-      { value: '200K+', label: 'Lines modernized', note: 'C++20 migration, 20% faster builds' },
-      { value: '10×', label: 'Faster reducer', note: 'LLVM-Reduce vs. legacy Bugpoint' },
-    ],
     work: {
       kicker: 'Selected work',
       title: 'Things I built',
@@ -34,20 +27,18 @@ export const content = {
           type: 'Product · Rails 8',
           year: '2026',
           summary:
-            'Payroll and project-tracking platform for a Mexican residential construction company. Worker org hierarchy, lot-by-lot build progress, and a payroll engine that handles CURP/RFC/NSS, fiscal caps, and cost-center reconciliation.',
-          tags: ['Ruby on Rails 8', 'PostgreSQL', 'Hotwire', 'Kamal', 'Spanish-first'],
-          link: null,
-          linkLabel: null,
+            'Payroll and project-tracking platform for a construction company. Org hierarchy, lot-by-lot build progress and a payroll engine that handles reconciliation + auditing.',
+          tags: ['Ruby on Rails 8', 'PostgreSQL', 'Hotwire', 'Kamal'],
+          links: [],
         },
         {
           name: 'lab404.org',
           type: 'Design + build',
-          year: '2025',
+          year: '2026',
           summary:
-            'Identity, design system, and site for lab404 — the studio side of what I do. Every pixel and every line of it is mine.',
+            'Brand identity, design system, and site built for lab404, a design studio client. Design and front-end delivered end to end.',
           tags: ['Design', 'Front-end', 'Brand'],
-          link: 'https://lab404.org',
-          linkLabel: 'lab404.org',
+          links: [{ label: 'lab404.org', href: 'https://lab404.org' }],
         },
         {
           name: 'Zanzibar / Core Data',
@@ -56,8 +47,7 @@ export const content = {
           summary:
             'Google\'s global authorization system. Designed a serving strategy that cut storage cost 90% at 150M QPS, launched a C++20 bulk upload service moving billions of records a day, and led schema migration for petabytes across thousands of databases.',
           tags: ['C++20', 'Distributed systems', 'Spanner', 'SRE'],
-          link: null,
-          linkLabel: null,
+          links: [],
         },
         {
           name: 'LLVM-Reduce',
@@ -66,8 +56,13 @@ export const content = {
           summary:
             'Re-architected LLVM\'s test-case reducer. The rewrite runs 10× faster and produces 3× smaller cases than Bugpoint; the community proposal behind it became the foundation for the tool that shipped.',
           tags: ['C++17', 'LLVM', 'Compilers'],
-          link: 'https://lists.llvm.org/pipermail/llvm-dev/2019-July/134292.html',
-          linkLabel: 'Read the proposal',
+          links: [
+            {
+              label: 'Read the proposal',
+              href: 'https://releases.llvm.org/14.0.0/docs/BugpointRedesign.html',
+            },
+            { label: 'LLVM Dev Meeting talk', href: 'https://www.youtube.com/watch?v=n1jDj7J9N8c' },
+          ],
         },
       ],
     },
@@ -75,16 +70,18 @@ export const content = {
       kicker: 'About',
       title: 'Systems person, product brain',
       body: [
-        'I write software that has to hold up. At Google Core Data I owned services handling 150M queries per second — the kind of thing where a bad deploy is a headline, and where "make it 90% cheaper" is a real quarter-long problem with a real answer.',
-        'That habit follows me into product work. Renovacreto is a payroll system for a construction company in Mexico: nobody there cares about my latency graphs, they care that the crew gets paid correctly on Friday. Same discipline, different scoreboard.',
-        'These days I work independently, leaning hard on AI tooling to move at a pace that used to need a team. Spanish native, English fluent, French conversational.',
+        'I write critical software that matters.',
+        'At Google, I owned services handling >300M queries per second (QPS). So every line needed to be thoroughly tested; otherwise things break and people notice. That mindset carried over to my product work.',
+        'The company (whose payroll system I built): doesn\'t care about latency graphs, they care that the crew gets paid correctly and on time.',
+        'These days I work independently, leaning hard on AI tooling to move at a pace that used to need a team. ',
+        'Spanish native, English fluent, French conversational.',
       ],
       skills: {
         title: 'Toolkit',
         groups: [
-          { label: 'Languages', items: ['C++20', 'Ruby', 'Python 3', 'JavaScript', 'SQL', 'Go', 'Swift'] },
+          { label: 'Languages', items: ['C++20', 'Ruby', 'Python 3', 'JavaScript', 'SQL', 'Go'] },
           { label: 'Frameworks', items: ['Rails 8', 'Hotwire', 'Astro', 'LLVM'] },
-          { label: 'Infra', items: ['PostgreSQL', 'Kubernetes', 'Docker', 'GCP', 'Kamal', 'gRPC', 'Bazel'] },
+          { label: 'Infra', items: ['PostgreSQL', 'Kubernetes', 'Docker', 'GCP', 'AWS', 'Kamal', 'gRPC', 'Bazel'] },
         ],
       },
     },
@@ -93,20 +90,22 @@ export const content = {
       title: 'The track record',
       items: [
         {
-          role: 'Software Engineer — Freelance',
+          role: 'Software Engineer',
           org: 'Independent',
           place: 'New York, NY',
           period: 'Feb 2026 — Present',
+          icon: 'freelance',
           points: [
-            'Built a full payroll and project-tracking system in Ruby on Rails for a construction client, end to end.',
-            'Heavy AI-assisted workflow (Claude Code, Copilot) for a ~10× delivery speedup on solo work.',
+            'Built a payroll system in Ruby on Rails, leveraging Claude Code and GitHub Copilot to accelerate proficiency and automate end-to-end processes — delivered 10x productivity boost.',
+            'Designed and built the brand, design system, and site for lab404, a design studio client.',
           ],
         },
         {
           role: 'Software Engineer',
-          org: 'Google — Core Data (Zanzibar)',
+          org: 'Google — Core Data',
           place: 'New York, NY',
           period: 'Sep 2021 — Jan 2026',
+          icon: 'core',
           points: [
             'Designed a serving strategy for a globally distributed system at 150M QPS: 90% storage cost reduction, 99.99% availability, sub-50ms latency SLO.',
             'Launched a C++20 global bulk upload service processing billions of records daily, cutting client wait times 80%.',
@@ -122,6 +121,7 @@ export const content = {
           org: 'Google — Developer Tools',
           place: 'Sunnyvale, CA',
           period: 'Summer 2019 & 2020',
+          icon: 'tools',
           points: [
             'Created LLVM-Reduce, a C++17 test-case reducer running 10× faster with 3× smaller output than the legacy tool.',
             'Designed a high-throughput C++ bulk processing service adopted by hundreds of internal clients.',
@@ -142,13 +142,11 @@ export const content = {
       body: 'Open to freelance work, contract engineering, and interesting full-time roles. Fastest way to reach me is email.',
       email: 'hola@diego.tf',
       links: [
-        { label: 'LinkedIn', href: 'https://www.linkedin.com/in/diegotrev/' },
-        { label: 'GitHub', href: 'https://github.com/diegotf30' },
-        { label: 'Instagram', href: 'https://www.instagram.com/diegotf30/' },
-        { label: 'lab404', href: 'https://lab404.org' },
+        { label: 'LinkedIn', href: 'https://www.linkedin.com/in/diegotrev/', icon: 'linkedin' },
+        { label: 'GitHub', href: 'https://github.com/diegotf30', icon: 'github' },
+        { label: 'Instagram', href: 'https://www.instagram.com/diegotf30/', icon: 'instagram' },
       ],
     },
-    footer: 'Built with Astro. Hosted on GitHub Pages.',
   },
 
   es: {
@@ -159,21 +157,14 @@ export const content = {
     },
     nav: { work: 'Proyectos', about: 'Perfil', experience: 'Experiencia', contact: 'Contacto' },
     hero: {
-      badge: 'Ex-Google · Core Data',
       title: ['Diego', 'Treviño'],
       role: 'Ingeniero de Software',
       lede:
         'Pasé cuatro años en Google manteniendo sistemas de escala planetaria rápidos, baratos y aburridamente confiables. Hoy construyo productos completos para quien los necesita.',
       cta: 'Ver proyectos',
       ctaAlt: 'Contáctame',
-      location: 'Nueva York, NY · Disponible para proyectos',
+      location: 'Disponible para proyectos',
     },
-    stats: [
-      { value: '150M', label: 'QPS atendidos', note: 'Distribuido global, 99.99% de disponibilidad' },
-      { value: '90%', label: 'Menos costo de storage', note: 'Nueva estrategia de serving, SLO <50ms' },
-      { value: '200K+', label: 'Líneas modernizadas', note: 'Migración a C++20, builds 20% más rápidos' },
-      { value: '10×', label: 'Reducer más rápido', note: 'LLVM-Reduce vs. Bugpoint heredado' },
-    ],
     work: {
       kicker: 'Trabajo seleccionado',
       title: 'Lo que he construido',
@@ -184,19 +175,17 @@ export const content = {
           year: '2026',
           summary:
             'Plataforma de nómina y seguimiento de obra para una constructora residencial mexicana. Jerarquía de cuadrillas, avance lote por lote y un motor de nómina que maneja CURP/RFC/NSS, topes fiscales y conciliación por centro de costos.',
-          tags: ['Ruby on Rails 8', 'PostgreSQL', 'Hotwire', 'Kamal', 'Español nativo'],
-          link: null,
-          linkLabel: null,
+          tags: ['Ruby on Rails 8', 'PostgreSQL', 'Hotwire', 'Kamal'],
+          links: [],
         },
         {
           name: 'lab404.org',
           type: 'Diseño + desarrollo',
           year: '2025',
           summary:
-            'Identidad, sistema de diseño y sitio de lab404 — el lado de estudio de lo que hago. Cada pixel y cada línea son míos.',
+            'Identidad de marca, sistema de diseño y sitio construidos para lab404, un estudio de diseño cliente. Diseño y front-end entregados de punta a punta.',
           tags: ['Diseño', 'Front-end', 'Marca'],
-          link: 'https://lab404.org',
-          linkLabel: 'lab404.org',
+          links: [{ label: 'lab404.org', href: 'https://lab404.org' }],
         },
         {
           name: 'Zanzibar / Core Data',
@@ -205,8 +194,7 @@ export const content = {
           summary:
             'El sistema global de autorización de Google. Diseñé una estrategia de serving que bajó 90% el costo de almacenamiento a 150M QPS, lancé un servicio C++20 de carga masiva que mueve miles de millones de registros al día y dirigí la migración de esquemas de petabytes en miles de bases de datos.',
           tags: ['C++20', 'Sistemas distribuidos', 'Spanner', 'SRE'],
-          link: null,
-          linkLabel: null,
+          links: [],
         },
         {
           name: 'LLVM-Reduce',
@@ -215,8 +203,13 @@ export const content = {
           summary:
             'Rediseñé el reductor de casos de prueba de LLVM. La reescritura corre 10× más rápido y produce casos 3× más chicos que Bugpoint; la propuesta a la comunidad se volvió la base de la herramienta que hoy existe.',
           tags: ['C++17', 'LLVM', 'Compiladores'],
-          link: 'https://lists.llvm.org/pipermail/llvm-dev/2019-July/134292.html',
-          linkLabel: 'Leer la propuesta',
+          links: [
+            {
+              label: 'Leer la propuesta',
+              href: 'https://releases.llvm.org/14.0.0/docs/BugpointRedesign.html',
+            },
+            { label: 'Charla en LLVM Dev Meeting', href: 'https://www.youtube.com/watch?v=n1jDj7J9N8c' },
+          ],
         },
       ],
     },
@@ -233,7 +226,7 @@ export const content = {
         groups: [
           { label: 'Lenguajes', items: ['C++20', 'Ruby', 'Python 3', 'JavaScript', 'SQL', 'Go', 'Swift'] },
           { label: 'Frameworks', items: ['Rails 8', 'Hotwire', 'Astro', 'LLVM'] },
-          { label: 'Infra', items: ['PostgreSQL', 'Kubernetes', 'Docker', 'GCP', 'Kamal', 'gRPC', 'Bazel'] },
+          { label: 'Infra', items: ['PostgreSQL', 'Kubernetes', 'Docker', 'GCP', 'AWS', 'Kamal', 'gRPC', 'Bazel'] },
         ],
       },
     },
@@ -246,8 +239,10 @@ export const content = {
           org: 'Independiente',
           place: 'Nueva York, NY',
           period: 'Feb 2026 — Presente',
+          icon: 'freelance',
           points: [
             'Construí de punta a punta un sistema completo de nómina y seguimiento de obra en Ruby on Rails para un cliente constructor.',
+            'Diseñé y construí la marca, el sistema de diseño y el sitio de lab404, un estudio de diseño cliente.',
             'Flujo intensivo con IA (Claude Code, Copilot) para una entrega ~10× más rápida trabajando solo.',
           ],
         },
@@ -256,6 +251,7 @@ export const content = {
           org: 'Google — Core Data (Zanzibar)',
           place: 'Nueva York, NY',
           period: 'Sep 2021 — Ene 2026',
+          icon: 'core',
           points: [
             'Diseñé la estrategia de serving de un sistema distribuido global a 150M QPS: 90% menos costo de almacenamiento, 99.99% de disponibilidad y SLO de latencia bajo 50ms.',
             'Lancé un servicio C++20 de carga masiva global que procesa miles de millones de registros al día, reduciendo 80% los tiempos de espera del cliente.',
@@ -271,6 +267,7 @@ export const content = {
           org: 'Google — Developer Tools',
           place: 'Sunnyvale, CA',
           period: 'Veranos 2019 y 2020',
+          icon: 'tools',
           points: [
             'Creé LLVM-Reduce, un reductor de casos de prueba en C++17 10× más rápido y con salidas 3× más chicas que la herramienta anterior.',
             'Diseñé un servicio C++ de procesamiento masivo de alto throughput adoptado por cientos de clientes internos.',
@@ -291,12 +288,10 @@ export const content = {
       body: 'Abierto a freelance, contratos de ingeniería y roles de tiempo completo interesantes. Lo más rápido es el correo.',
       email: 'hola@diego.tf',
       links: [
-        { label: 'LinkedIn', href: 'https://www.linkedin.com/in/diegotrev/' },
-        { label: 'GitHub', href: 'https://github.com/diegotf30' },
-        { label: 'Instagram', href: 'https://www.instagram.com/diegotf30/' },
-        { label: 'lab404', href: 'https://lab404.org' },
+        { label: 'LinkedIn', href: 'https://www.linkedin.com/in/diegotrev/', icon: 'linkedin' },
+        { label: 'GitHub', href: 'https://github.com/diegotf30', icon: 'github' },
+        { label: 'Instagram', href: 'https://www.instagram.com/diegotf30/', icon: 'instagram' },
       ],
     },
-    footer: 'Hecho con Astro. Hospedado en GitHub Pages.',
   },
 } as const;

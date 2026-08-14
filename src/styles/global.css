@@ -359,34 +359,52 @@ section {
   background: var(--glass-2);
 }
 
+/* a two-position switch: one sliding thumb, two real links underneath */
 .lang {
-  display: flex;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 38px);
   padding: 3px;
-  gap: 2px;
   border-radius: 999px;
   background: rgba(0, 0, 0, 0.28);
   border: 1px solid var(--line);
 }
 
+.lang::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 38px;
+  height: calc(100% - 6px);
+  border-radius: 999px;
+  background: var(--ink);
+  transition: transform 0.4s var(--ease);
+}
+
+.lang[data-lang='es']::before {
+  transform: translateX(38px);
+}
+
 .lang a {
+  position: relative;
+  z-index: 1;
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 0.08em;
-  padding: 5px 9px;
-  border-radius: 999px;
+  padding: 5px 0;
+  text-align: center;
   color: var(--ink-3);
-  transition: 0.25s var(--ease);
+  transition: color 0.3s var(--ease);
 }
 
 .lang a[aria-current='true'] {
-  background: var(--ink);
   color: #05070d;
   font-weight: 600;
 }
 
 .lang a:not([aria-current='true']):hover {
   color: var(--ink);
-  background: var(--glass-2);
 }
 
 /* ---------- hero ---------- */
@@ -401,11 +419,17 @@ section {
 .hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-areas: 'copy term';
+  grid-template-areas:
+    'title term'
+    'copy  .';
   align-content: center;
-  align-items: center;
   justify-items: center;
   gap: 26px 40px;
+}
+
+.hero h1 {
+  grid-area: title;
+  justify-self: stretch;
 }
 
 .hero-copy {
@@ -413,14 +437,16 @@ section {
   justify-self: stretch;
 }
 
+/* rides the title's row, centered against it */
 .terminal {
   grid-area: term;
+  align-self: center;
 }
 
 /* ---------- terminal ---------- */
 
 .terminal {
-  width: clamp(280px, 33vw, 420px);
+  width: clamp(320px, 40vw, 520px);
   border-radius: var(--radius-sm);
   font-family: var(--mono);
   overflow: hidden;
@@ -455,8 +481,8 @@ section {
 .term-body {
   position: relative;
   margin: 0;
-  padding: 15px 16px;
-  font-size: 12.5px;
+  padding: 17px 18px;
+  font-size: 13.5px;
   line-height: 1.8;
   color: var(--ink-2);
   white-space: pre-wrap;
@@ -471,7 +497,7 @@ section {
 
 #term {
   position: absolute;
-  inset: 15px 16px auto;
+  inset: 17px 18px auto;
 }
 
 .term-body .p {
@@ -499,11 +525,7 @@ section {
 
 /* ---------- marquee ---------- */
 
-/* tighten the sections it sits between, or it floats in a 240px void */
-.stats-section {
-  padding-bottom: 62px;
-}
-
+/* tighten the section below it, or it floats in a 240px void */
 .marquee + section {
   padding-top: 62px;
 }
@@ -557,32 +579,21 @@ section {
   }
 }
 
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  padding: 7px 15px 7px 12px;
-  border-radius: 999px;
-  font-size: 13px;
-  color: var(--ink-2);
-  margin-bottom: 30px;
-}
-
 .dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--accent-3);
-  box-shadow: 0 0 0 0 rgba(95, 224, 208, 0.6);
+  background: #3ddc84;
+  box-shadow: 0 0 0 0 rgba(61, 220, 132, 0.6);
   animation: pulse 2.6s infinite;
 }
 
 @keyframes pulse {
   70% {
-    box-shadow: 0 0 0 9px rgba(95, 224, 208, 0);
+    box-shadow: 0 0 0 9px rgba(61, 220, 132, 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(95, 224, 208, 0);
+    box-shadow: 0 0 0 0 rgba(61, 220, 132, 0);
   }
 }
 
@@ -635,6 +646,9 @@ section {
 }
 
 .hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin-top: 14px;
   font-family: var(--mono);
   font-size: 12.5px;
@@ -695,42 +709,6 @@ section {
   transform: translateX(3px);
 }
 
-/* ---------- stats ---------- */
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  padding-top: 0;
-}
-
-.stat {
-  padding: 26px 24px 24px;
-}
-
-.stat .v {
-  font-size: clamp(30px, 3.6vw, 44px);
-  font-weight: 600;
-  letter-spacing: -0.045em;
-  background: linear-gradient(180deg, #fff, #92a2c4);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.stat .l {
-  margin-top: 6px;
-  font-size: 14.5px;
-  font-weight: 500;
-}
-
-.stat .n {
-  margin-top: 5px;
-  font-size: 12.5px;
-  color: var(--ink-3);
-  line-height: 1.45;
-}
-
 /* ---------- work ---------- */
 
 .work-grid {
@@ -789,6 +767,12 @@ section {
   border: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.03);
   color: var(--ink-2);
+}
+
+.card-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
 }
 
 .card-link {
@@ -868,6 +852,29 @@ section {
   gap: 28px;
 }
 
+.job-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 15px;
+  border-radius: 11px;
+  border: 1px solid var(--line);
+  color: var(--role);
+  background: color-mix(in srgb, var(--role) 16%, transparent);
+}
+
+.job-icon svg {
+  width: 21px;
+  height: 21px;
+}
+
+/* one accent per role, so the timeline reads at a glance */
+.i-freelance { --role: #a98cff; }
+.i-core { --role: #78acff; }
+.i-tools { --role: #5fe0d0; }
+
 .job-head h3 {
   font-size: 20px;
   letter-spacing: -0.02em;
@@ -885,6 +892,15 @@ section {
   font-size: 11.5px;
   letter-spacing: 0.06em;
   color: var(--ink-3);
+}
+
+.job-head .place {
+  margin-top: 3px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+  opacity: 0.75;
 }
 
 .job ul {
@@ -992,6 +1008,9 @@ section {
 }
 
 .social a {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
   padding: 10px 18px;
   border-radius: 999px;
   border: 1px solid var(--line);
@@ -1000,6 +1019,16 @@ section {
   background: rgba(255, 255, 255, 0.03);
   transition: 0.3s var(--ease);
 }
+
+.social-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--brand);
+}
+
+.i-linkedin { --brand: #0a66c2; }
+.i-github { --brand: #e6edfa; }
+.i-instagram { --brand: #e1306c; }
 
 .social a:hover {
   color: var(--ink);
@@ -1038,9 +1067,6 @@ footer {
     display: none;
   }
 
-  .stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
   .work-grid,
   .about-grid {
     grid-template-columns: 1fr;
@@ -1058,15 +1084,16 @@ footer {
   /* terminal drops below the copy */
   .hero-grid {
     grid-template-areas:
+      'title'
       'copy'
       'term';
     grid-template-columns: minmax(0, 1fr);
-    gap: 34px;
+    gap: 26px 0;
   }
   .terminal {
     width: 100%;
-    max-width: 460px;
-    justify-self: start;
+    max-width: none;
+    justify-self: stretch;
   }
   .edu .m {
     margin-left: 0;
@@ -1075,8 +1102,20 @@ footer {
 }
 
 @media (max-width: 520px) {
-  .stats {
-    grid-template-columns: 1fr;
+  .hero {
+    padding-top: 118px;
+  }
+  .hero h1 {
+    font-size: clamp(44px, 11.5vw, 58px);
+  }
+  .hero-lede {
+    margin-top: 12px;
+  }
+  .hero-cta {
+    margin-top: 26px;
+  }
+  .hero-grid {
+    gap: 24px;
   }
   .prose,
   .card,

@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { content, type Lang } from '../i18n';
+import { icons } from '../icons';
 
 interface Props {
   lang: Lang;
@@ -24,7 +25,7 @@ const marquee = [
       <a href="#experience">{t.nav.experience}</a>
       <a href="#contact">{t.nav.contact}</a>
     </div>
-    <div class="lang">
+    <div class="lang" data-lang={lang}>
       <a href="/" aria-current={lang === 'en'} hreflang="en">EN</a>
       <a href="/es/" aria-current={lang === 'es'} hreflang="es">ES</a>
     </div>
@@ -32,19 +33,16 @@ const marquee = [
 
   <header class="hero">
     <div class="wrap hero-grid">
-      <div class="hero-copy">
-      <div class="badge glass">
-        <span class="dot"></span>
-        {t.hero.badge}
-      </div>
       <h1>
         {t.hero.title.map((line) => (
           <span class="line"><span>{line}</span></span>
         ))}
       </h1>
+
+      <div class="hero-copy">
       <p class="hero-role reveal">{t.hero.role}</p>
       <p class="hero-lede reveal" style="--d:.06s">{t.hero.lede}</p>
-      <p class="hero-meta reveal" style="--d:.12s">{t.hero.location}</p>
+      <p class="hero-meta reveal" style="--d:.12s"><span class="dot"></span>{t.hero.location}</p>
       <div class="hero-cta reveal" style="--d:.18s">
         <a class="btn btn-primary" href="#work">
           {t.hero.cta}<span class="arrow">→</span>
@@ -67,19 +65,6 @@ available for work → hola@diego.tf</code><code id="term"></code></pre>
       </div>
     </div>
   </header>
-
-
-  <section class="stats-section" style="padding-top:0">
-    <div class="wrap stats">
-      {t.stats.map((s, i) => (
-        <div class="stat glass reveal" style={`--d:${i * 0.07}s`}>
-          <div class="v">{s.value}</div>
-          <div class="l">{s.label}</div>
-          <div class="n">{s.note}</div>
-        </div>
-      ))}
-    </div>
-  </section>
 
 
   <div class="marquee" aria-hidden="true">
@@ -109,10 +94,14 @@ available for work → hola@diego.tf</code><code id="term"></code></pre>
             </div>
             <h3>{p.name}</h3>
             <p>{p.summary}</p>
-            {p.link && (
-              <a class="card-link" href={p.link} target="_blank" rel="noopener noreferrer">
-                {p.linkLabel}<span class="arrow">↗</span>
-              </a>
+            {p.links.length > 0 && (
+              <div class="card-links">
+                {p.links.map((l) => (
+                  <a class="card-link" href={l.href} target="_blank" rel="noopener noreferrer">
+                    {l.label}<span class="arrow">↗</span>
+                  </a>
+                ))}
+              </div>
             )}
             <div class="tags">
               {p.tags.map((tag) => (
@@ -164,9 +153,13 @@ available for work → hola@diego.tf</code><code id="term"></code></pre>
         {t.experience.items.map((job) => (
           <article class="job glass reveal">
             <div class="job-head">
+              <span class={`job-icon i-${job.icon}`} aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor" set:html={icons[job.icon]} />
+              </span>
               <h3>{job.role}</h3>
               <div class="org">{job.org}</div>
-              <div class="period">{job.period} · {job.place}</div>
+              <div class="period">{job.period}</div>
+              <div class="place">{job.place}</div>
             </div>
             <ul>
               {job.points.map((pt) => (
@@ -194,7 +187,10 @@ available for work → hola@diego.tf</code><code id="term"></code></pre>
         <a class="mail" href={`mailto:${t.contact.email}`}>{t.contact.email}</a>
         <div class="social">
           {t.contact.links.map((l) => (
-            <a href={l.href} target="_blank" rel="noopener noreferrer">{l.label}</a>
+            <a href={l.href} target="_blank" rel="noopener noreferrer">
+              <svg class={`social-icon i-${l.icon}`} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" set:html={icons[l.icon]} />
+              {l.label}
+            </a>
           ))}
         </div>
       </div>
@@ -202,6 +198,6 @@ available for work → hola@diego.tf</code><code id="term"></code></pre>
   </section>
 
   <footer>
-    <div class="wrap">© {new Date().getFullYear()} Diego Treviño · {t.footer}</div>
+    <div class="wrap">© {new Date().getFullYear()} Diego Treviño</div>
   </footer>
 </Layout>
