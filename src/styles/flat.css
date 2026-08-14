@@ -100,59 +100,114 @@ section {
   max-width: 17ch;
 }
 
-/* ---------- plants ---------- */
+/* ---------- illustrations ----------
+   Flat layout, but the art is not flat: soft volumes, shading, rounded
+   silhouettes. Neko Atsume register — chunky, muted, a bit cute. */
 
-.plant {
+.art {
   position: absolute;
   pointer-events: none;
-  color: var(--olive);
-  transform-origin: bottom center;
-  animation: sway 7s ease-in-out infinite;
+  z-index: 0;
 }
 
-.plant svg {
+.art svg {
   display: block;
   width: 100%;
   height: auto;
-  fill: currentColor;
+  overflow: visible;
 }
 
 @keyframes sway {
   0%,
   100% {
-    transform: rotate(-2.2deg);
+    transform: rotate(-1.8deg);
   }
   50% {
-    transform: rotate(2.4deg);
+    transform: rotate(2deg);
   }
 }
 
-.plant.p1 {
-  width: clamp(190px, 26vw, 360px);
-  right: -40px;
-  bottom: -30px;
-  color: var(--olive);
-  animation-duration: 8s;
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.035, 1.05);
+  }
 }
 
-.plant.p2 {
-  width: clamp(120px, 15vw, 210px);
-  left: -46px;
-  top: 12%;
-  color: var(--olive-dk);
-  opacity: 0.55;
-  animation-duration: 11s;
-  animation-delay: -3s;
+@keyframes tail-flick {
+  0%,
+  100% {
+    transform: rotate(-6deg);
+  }
+  50% {
+    transform: rotate(9deg);
+  }
 }
 
-.plant.p3 {
+@keyframes leaf-bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--r, 0deg));
+  }
+  50% {
+    transform: translateY(-4px) rotate(calc(var(--r, 0deg) + 1.5deg));
+  }
+}
+
+.a-monstera {
+  width: clamp(190px, 24vw, 330px);
+  right: -30px;
+  bottom: -18px;
+  transform-origin: bottom center;
+  animation: sway 9s ease-in-out infinite;
+}
+
+.a-pothos {
+  width: clamp(110px, 14vw, 190px);
+  left: -30px;
+  top: -20px;
+  transform-origin: top center;
+  animation: sway 12s ease-in-out infinite -4s;
+}
+
+/* individual leaves drift on their own clocks so the plant isn't one rigid block */
+.leaf {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.cat-body {
+  transform-box: fill-box;
+  transform-origin: 50% 92%;
+  animation: breathe 4.6s ease-in-out infinite;
+}
+
+.cat-tail {
+  transform-box: fill-box;
+  transform-origin: 88% 60%;
+  animation: tail-flick 3.8s ease-in-out infinite;
+}
+
+.a-cat-sit {
+  width: clamp(96px, 11vw, 155px);
+  right: 23%;
+  bottom: 0;
+}
+
+.a-cat-sleep {
   width: clamp(110px, 13vw, 180px);
-  right: 4%;
-  top: -34px;
-  color: var(--clay);
-  opacity: 0.5;
-  animation-duration: 9.5s;
-  animation-delay: -5s;
+  right: 5%;
+  bottom: -6px;
+  opacity: 0.95;
+}
+
+.a-cat-loaf {
+  width: clamp(84px, 9vw, 125px);
+  left: 6%;
+  bottom: 0;
 }
 
 /* ---------- nav ---------- */
@@ -688,6 +743,11 @@ section {
 }
 
 footer {
+  position: relative;
+  min-height: 150px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
   padding: 40px 0 56px;
   text-align: center;
   font-size: 13px;
@@ -728,10 +788,11 @@ footer {
   .nav-links {
     display: none;
   }
-  .plant.p1 {
-    opacity: 0.35;
+  .a-monstera {
+    opacity: 0.4;
   }
-  .plant.p2 {
+  .a-pothos,
+  .a-cat-sit {
     display: none;
   }
   .edu .m {
