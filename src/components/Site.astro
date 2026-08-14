@@ -8,6 +8,11 @@ interface Props {
 const { lang } = Astro.props;
 const t = content[lang];
 const home = lang === 'es' ? '/es/' : '/';
+
+const marquee = [
+  'C++20', 'Ruby on Rails', 'Spanner', 'LLVM', 'gRPC', 'Kubernetes',
+  'PostgreSQL', 'Bazel', 'Docker', 'GCP', 'Hotwire', 'Astro', 'Python',
+];
 ---
 
 <Layout lang={lang}>
@@ -49,6 +54,7 @@ const home = lang === 'es' ? '/es/' : '/';
       </div>
 
       <div class="cube-stage" aria-hidden="true">
+        <div class="cube-tilt">
         <div class="cube">
           <span class="face fr">
             <svg viewBox="0 0 24 24"><path d="M9 6 3 12l6 6M15 6l6 6-6 6" /></svg>
@@ -82,9 +88,16 @@ const home = lang === 'es' ? '/es/' : '/';
             </svg>
           </span>
         </div>
+        </div>
+      </div>
+
+      <div class="terminal glass" aria-hidden="true">
+        <div class="term-bar"><i></i><i></i><i></i><span>~/diego.tf</span></div>
+        <pre class="term-body"><code id="term"></code></pre>
       </div>
     </div>
   </header>
+
 
   <section class="stats-section" style="padding-top:0">
     <div class="wrap stats">
@@ -97,6 +110,19 @@ const home = lang === 'es' ? '/es/' : '/';
       ))}
     </div>
   </section>
+
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      {[0, 1].map(() => (
+        <div class="marquee-row">
+          {marquee.map((m) => (
+            <><span>{m}</span><i>◆</i></>
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
 
   <section id="work">
     <div class="wrap">

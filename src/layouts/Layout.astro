@@ -37,6 +37,8 @@ const canonical = new URL(lang === 'es' ? '/es/' : '/', Astro.site);
   </head>
   <body>
     <div class="aurora"><span></span><span></span><span></span></div>
+    <div class="dots"></div>
+    <div class="shards" aria-hidden="true"><span></span><span></span><span></span></div>
     <div class="grain"></div>
     <slot />
 
@@ -63,6 +65,118 @@ const canonical = new URL(lang === 'es' ? '/es/' : '/', Astro.site);
           el.style.setProperty('--my', `${ev.clientY - r.top}px`);
         });
       });
+
+      const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // parallax: one scroll var, CSS moves the layers at different rates
+      if (!reduced) {
+        const root = document.documentElement;
+        addEventListener(
+          'scroll',
+          () => root.style.setProperty('--sy', String(scrollY)),
+          { passive: true }
+        );
+      }
+
+      // drag the cube to spin it; release and the idle tumble carries on
+      const stage = document.querySelector<HTMLElement>('.cube-stage');
+      const tilt = document.querySelector<HTMLElement>('.cube-tilt');
+      if (stage && tilt) {
+        let rx = 0;
+        let ry = 0;
+        let dragging = false;
+        let dragged = false;
+        let lastX = 0;
+        let lastY = 0;
+
+        const apply = () => {
+          tilt.style.setProperty('--px', `${rx}deg`);
+          tilt.style.setProperty('--py', `${ry}deg`);
+        };
+
+        stage.addEventListener('pointerdown', (e) => {
+          dragging = true;
+          lastX = e.clientX;
+          lastY = e.clientY;
+          tilt.classList.add('dragging');
+          stage.setPointerCapture(e.pointerId);
+        });
+
+        stage.addEventListener('pointermove', (e) => {
+          if (dragging) {
+            dragged = true;
+            ry += (e.clientX - lastX) * 0.6;
+            rx -= (e.clientY - lastY) * 0.6;
+            lastX = e.clientX;
+            lastY = e.clientY;
+            apply();
+            return;
+          }
+          // once it has been dragged, the orientation is the visitor's; leave it
+          if (dragged) return;
+          // idle hover: lean toward the cursor, capped so it stays legible
+          const r = stage.getBoundingClientRect();
+          ry = ((e.clientX - (r.left + r.width / 2)) / r.width) * 26;
+          rx = -((e.clientY - (r.top + r.height / 2)) / r.height) * 26;
+          apply();
+        });
+
+        const release = () => {
+          dragging = false;
+          tilt.classList.remove('dragging');
+        };
+        stage.addEventListener('pointerup', release);
+        stage.addEventListener('pointercancel', release);
+        stage.addEventListener('pointerleave', () => {
+          if (!dragging && !dragged) {
+            rx = 0;
+            ry = 0;
+            apply();
+          }
+        });
+      }
+
+      // terminal typewriter
+      const term = document.getElementById('term');
+      if (term && !reduced) {
+        const lines: [string, string][] = [
+          ['whoami', 'diego treviño — software engineer'],
+          ['stack --top', 'c++20 · rails · postgres · k8s'],
+          ['status', 'available for work → hola@diego.tf'],
+        ];
+        const caret = '<span class="caret">|</span>';
+        let out = '';
+        let li = 0;
+        let ci = 0;
+        let typing = '';
+
+        const tick = () => {
+          const [cmd, res] = lines[li];
+          if (ci <= cmd.length) {
+            typing = `<span class="p">$ </span>${cmd.slice(0, ci)}`;
+            term.innerHTML = out + typing + caret;
+            ci++;
+            setTimeout(tick, 55);
+          } else {
+            out += `<span class="p">$ </span>${cmd}\n<span class="o">${res}</span>\n`;
+            term.innerHTML = out + caret;
+            li++;
+            ci = 0;
+            if (li < lines.length) {
+              setTimeout(tick, 620);
+            } else {
+              setTimeout(() => {
+                out = '';
+                li = 0;
+                tick();
+              }, 3400);
+            }
+          }
+        };
+        tick();
+      } else if (term) {
+        term.textContent = '$ whoami\ndiego treviño — software engineer';
+      }
     </script>
   </body>
 </html>

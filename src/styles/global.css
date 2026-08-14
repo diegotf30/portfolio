@@ -127,6 +127,59 @@ ul {
   }
 }
 
+/* parallax layers: --sy is scrollY, set once per scroll in JS */
+
+.dots {
+  position: fixed;
+  inset: -20% -10%;
+  z-index: -2;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: radial-gradient(rgba(200, 220, 255, 0.16) 1px, transparent 1px);
+  background-size: 34px 34px;
+  transform: translate3d(0, calc(var(--sy, 0) * -0.06px), 0);
+}
+
+.shards {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+}
+
+.shards span {
+  position: absolute;
+  display: block;
+  border-radius: 14px;
+  border: 1px solid rgba(200, 220, 255, 0.14);
+  background: linear-gradient(140deg, rgba(150, 190, 255, 0.09), rgba(140, 120, 255, 0.03));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.shards span:nth-child(1) {
+  width: 120px;
+  height: 120px;
+  left: 7%;
+  top: 58%;
+  transform: translate3d(0, calc(var(--sy, 0) * -0.14px), 0) rotate(24deg);
+}
+
+.shards span:nth-child(2) {
+  width: 74px;
+  height: 74px;
+  right: 12%;
+  top: 22%;
+  transform: translate3d(0, calc(var(--sy, 0) * -0.24px), 0) rotate(-16deg);
+}
+
+.shards span:nth-child(3) {
+  width: 168px;
+  height: 168px;
+  right: 4%;
+  top: 74%;
+  transform: translate3d(0, calc(var(--sy, 0) * -0.09px), 0) rotate(-32deg);
+}
+
 /* grain + vignette, sits above aurora, below content */
 .grain {
   position: fixed;
@@ -300,8 +353,156 @@ section {
 .hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'copy cube'
+    'copy term';
+  align-content: center;
   align-items: center;
-  gap: 40px;
+  justify-items: center;
+  gap: 26px 40px;
+}
+
+.hero-copy {
+  grid-area: copy;
+  justify-self: stretch;
+}
+
+.cube-stage {
+  grid-area: cube;
+}
+
+.terminal {
+  grid-area: term;
+}
+
+/* ---------- terminal ---------- */
+
+.terminal {
+  width: clamp(240px, 25vw, 330px);
+  border-radius: var(--radius-sm);
+  font-family: var(--mono);
+  overflow: hidden;
+}
+
+.term-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.term-bar i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--line-2);
+}
+
+.term-bar i:first-child { background: #ff6b6b; opacity: 0.65; }
+.term-bar i:nth-child(2) { background: #ffc860; opacity: 0.65; }
+.term-bar i:nth-child(3) { background: var(--accent-3); opacity: 0.65; }
+
+.term-bar span {
+  margin-left: 6px;
+  font-size: 11px;
+  color: var(--ink-3);
+}
+
+.term-body {
+  margin: 0;
+  padding: 14px;
+  /* fixed height: the typewriter must not resize the hero as it runs */
+  height: 132px;
+  font-size: 12.5px;
+  line-height: 1.75;
+  color: var(--ink-2);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.term-body .p {
+  color: var(--accent-3);
+}
+
+.term-body .o {
+  color: var(--ink);
+}
+
+.term-body .caret {
+  display: inline-block;
+  width: 7px;
+  margin-left: 1px;
+  background: var(--accent);
+  animation: blink 1.05s steps(1) infinite;
+  color: transparent;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ---------- marquee ---------- */
+
+/* tighten the sections it sits between, or it floats in a 240px void */
+.stats-section {
+  padding-bottom: 62px;
+}
+
+.marquee + section {
+  padding-top: 62px;
+}
+
+.marquee {
+  position: relative;
+  overflow: hidden;
+  padding: 22px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.015);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: slide 38s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-row {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  padding-right: 26px;
+}
+
+.marquee-row span {
+  font-family: var(--mono);
+  font-size: clamp(15px, 2vw, 21px);
+  letter-spacing: -0.01em;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+.marquee-row i {
+  font-style: normal;
+  font-size: 9px;
+  color: var(--accent);
+  opacity: 0.6;
+}
+
+@keyframes slide {
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 /* ---------- hero cube ---------- */
@@ -312,6 +513,29 @@ section {
   height: var(--size);
   perspective: 1000px;
   perspective-origin: 50% 40%;
+}
+
+/* pointer drives this wrapper; the inner cube keeps its own idle spin,
+   so dragging and auto-tumble never fight over one transform */
+.cube-tilt {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--px, 0deg)) rotateY(var(--py, 0deg));
+  transition: transform 0.5s var(--ease);
+}
+
+.cube-tilt.dragging {
+  transition: none;
+}
+
+.cube-stage {
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.cube-stage:active {
+  cursor: grabbing;
 }
 
 .cube {
@@ -884,15 +1108,23 @@ footer {
   .nav-links {
     display: none;
   }
-  /* stack the cube under the copy instead of dropping it */
+  /* cube stays beside the name; terminal drops to its own full-width row */
   .hero-grid {
-    grid-template-columns: 1fr;
-    justify-items: start;
-    gap: 48px;
+    grid-template-areas:
+      'copy cube'
+      'term term';
+    gap: 30px 20px;
   }
   .cube-stage {
-    --size: clamp(120px, 32vw, 190px);
-    margin: 0 auto;
+    --size: clamp(84px, 21vw, 150px);
+  }
+  .terminal {
+    width: 100%;
+    max-width: 420px;
+    justify-self: start;
+  }
+  .shards span:nth-child(3) {
+    display: none;
   }
   .edu .m {
     margin-left: 0;
