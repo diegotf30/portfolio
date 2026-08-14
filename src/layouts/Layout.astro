@@ -8,6 +8,14 @@ interface Props {
 const { lang } = Astro.props;
 const t = content[lang];
 const canonical = new URL(lang === 'es' ? '/es/' : '/', Astro.site);
+
+// falling cubes: left %, size px, fall duration s, negative delay s, opacity
+const rain = [
+  [4, 26, 26, -3, 0.5], [13, 15, 34, -14, 0.34], [21, 34, 21, -8, 0.42],
+  [30, 19, 30, -19, 0.3], [39, 24, 24, -5, 0.46], [47, 13, 37, -22, 0.28],
+  [56, 30, 23, -11, 0.4], [64, 17, 32, -1, 0.32], [72, 22, 27, -16, 0.44],
+  [80, 15, 35, -7, 0.3], [88, 28, 22, -20, 0.4], [95, 18, 31, -12, 0.33],
+];
 ---
 
 <!doctype html>
@@ -38,6 +46,16 @@ const canonical = new URL(lang === 'es' ? '/es/' : '/', Astro.site);
   <body>
     <div class="aurora"><span></span><span></span><span></span></div>
     <div class="dots"></div>
+    <div class="cube-rain" aria-hidden="true">
+      {rain.map(([l, size, dur, delay, op]) => (
+        <span
+          class="mini"
+          style={`--l:${l}%;--s:${size}px;--d:${dur}s;--dl:${delay}s;--o:${op}`}
+        >
+          <span class="mini-cube"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+        </span>
+      ))}
+    </div>
     <div class="shards" aria-hidden="true"><span></span><span></span><span></span></div>
     <div class="grain"></div>
     <slot />
@@ -68,80 +86,13 @@ const canonical = new URL(lang === 'es' ? '/es/' : '/', Astro.site);
 
       const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      // parallax: one scroll var, CSS moves the layers at different rates
-      if (!reduced) {
-        const root = document.documentElement;
-        addEventListener(
-          'scroll',
-          () => root.style.setProperty('--sy', String(scrollY)),
-          { passive: true }
-        );
-      }
-
-      // drag the cube to spin it; release and the idle tumble carries on
-      const stage = document.querySelector<HTMLElement>('.cube-stage');
-      const tilt = document.querySelector<HTMLElement>('.cube-tilt');
-      if (stage && tilt) {
-        let rx = 0;
-        let ry = 0;
-        let dragging = false;
-        let dragged = false;
-        let lastX = 0;
-        let lastY = 0;
-
-        const apply = () => {
-          tilt.style.setProperty('--px', `${rx}deg`);
-          tilt.style.setProperty('--py', `${ry}deg`);
-        };
-
-        stage.addEventListener('pointerdown', (e) => {
-          dragging = true;
-          lastX = e.clientX;
-          lastY = e.clientY;
-          tilt.classList.add('dragging');
-          stage.setPointerCapture(e.pointerId);
-        });
-
-        stage.addEventListener('pointermove', (e) => {
-          if (dragging) {
-            dragged = true;
-            ry += (e.clientX - lastX) * 0.6;
-            rx -= (e.clientY - lastY) * 0.6;
-            lastX = e.clientX;
-            lastY = e.clientY;
-            apply();
-            return;
-          }
-          // once it has been dragged, the orientation is the visitor's; leave it
-          if (dragged) return;
-          // idle hover: lean toward the cursor, capped so it stays legible
-          const r = stage.getBoundingClientRect();
-          ry = ((e.clientX - (r.left + r.width / 2)) / r.width) * 26;
-          rx = -((e.clientY - (r.top + r.height / 2)) / r.height) * 26;
-          apply();
-        });
-
-        const release = () => {
-          dragging = false;
-          tilt.classList.remove('dragging');
-        };
-        stage.addEventListener('pointerup', release);
-        stage.addEventListener('pointercancel', release);
-        stage.addEventListener('pointerleave', () => {
-          if (!dragging && !dragged) {
-            rx = 0;
-            ry = 0;
-            apply();
-          }
-        });
-      }
-
       // terminal typewriter
       const term = document.getElementById('term');
       if (term && !reduced) {
         const lines: [string, string][] = [
           ['whoami', 'diego treviño — software engineer'],
           ['stack --top', 'c++20 · rails · postgres · k8s'],
+          ['ls projects/', 'renovacreto  lab404  zanzibar  llvm-reduce'],
           ['status', 'available for work → hola@diego.tf'],
         ];
         const caret = '<span class="caret">|</span>';
