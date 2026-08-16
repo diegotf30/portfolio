@@ -12,8 +12,10 @@ export const content = {
     hero: {
       title: ['Diego', 'Treviño'],
       role: 'Software Engineer',
-      lede:
-        'I spent four years at Google keeping planet-scale systems fast, cheap, and boringly reliable. Now I build products end-to-end for the people who need them.',
+      lede: [
+        'I spent four years at Google keeping planet-scale systems fast, cheap, and boringly reliable.',
+        'Now I build products end-to-end for the people who need them.',
+      ],
       cta: 'See the work',
       ctaAlt: 'Get in touch',
       location: 'Available for work',
@@ -175,8 +177,10 @@ export const content = {
     hero: {
       title: ['Diego', 'Treviño'],
       role: 'Ingeniero de Software',
-      lede:
-        'Pasé cuatro años en Google manteniendo sistemas de escala planetaria rápidos, baratos y aburridamente confiables. Hoy construyo productos completos para quien los necesita.',
+      lede: [
+        'Pasé cuatro años en Google manteniendo sistemas de escala planetaria rápidos, baratos y aburridamente confiables.',
+        'Hoy construyo productos completos para quien los necesita.',
+      ],
       cta: 'Ver proyectos',
       ctaAlt: 'Contáctame',
       location: 'Disponible para proyectos',

@@ -421,7 +421,7 @@ section {
   grid-template-columns: minmax(0, 1fr) auto;
   grid-template-areas:
     'title term'
-    'copy  .';
+    'copy  copy';
   align-content: center;
   justify-items: center;
   gap: 26px 40px;
@@ -446,7 +446,7 @@ section {
 /* ---------- terminal ---------- */
 
 .terminal {
-  width: clamp(340px, 46vw, 660px);
+  width: clamp(320px, 36vw, 520px);
   border-radius: var(--radius-sm);
   font-family: var(--mono);
   overflow: hidden;
@@ -482,6 +482,7 @@ section {
   position: relative;
   margin: 0;
   padding: 19px 21px;
+  min-height: 320px;
   font-size: 14.5px;
   line-height: 1.8;
   color: var(--ink-2);
@@ -597,10 +598,10 @@ section {
   }
 }
 
-/* capped so the longest line still fits its column beside the wider
-   terminal — .line clips overflow, so too big means silently cropped */
+/* .line clips overflow, so the cap must keep the longest line inside its
+   column — 168px fits beside the 520px terminal with room to spare */
 .hero h1 {
-  font-size: clamp(58px, 13.5vw, 140px);
+  font-size: clamp(58px, 13.5vw, 168px);
   font-weight: 600;
   letter-spacing: -0.052em;
   line-height: 0.88;
@@ -642,9 +643,13 @@ section {
 
 .hero-lede {
   margin-top: 16px;
-  max-width: 54ch;
   color: var(--ink-2);
   font-size: clamp(16px, 1.7vw, 19px);
+}
+
+/* one sentence per line on desktop; each just wraps on its own below 900px */
+.hero-lede span {
+  display: block;
 }
 
 .hero-meta {
@@ -1148,6 +1153,11 @@ footer {
   .nav-links {
     display: none;
   }
+  /* on phones the sentences read better as one flowing paragraph */
+  .hero-lede span {
+    display: inline;
+  }
+
   .contact-card p {
     max-width: 46ch;
   }

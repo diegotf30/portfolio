@@ -42,7 +42,11 @@ const marquee = [
 
       <div class="hero-copy">
       <p class="hero-role reveal">{t.hero.role}</p>
-      <p class="hero-lede reveal" style="--d:.06s">{t.hero.lede}</p>
+      <p class="hero-lede reveal" style="--d:.06s">
+        {t.hero.lede.map((line, i) => (
+          <>{i > 0 && ' '}<span>{line}</span></>
+        ))}
+      </p>
       <p class="hero-meta reveal" style="--d:.12s"><span class="dot"></span>{t.hero.location}</p>
       <div class="hero-cta reveal" style="--d:.18s">
         <a class="btn btn-primary" href="#work">
