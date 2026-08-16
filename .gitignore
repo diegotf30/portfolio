@@ -3,4 +3,6 @@ dist/
 .astro/
 .DS_Store
 *.pdf
+# ...except the published CV
+!public/diego-trevino-cv.pdf
 .env*

@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { content, type Lang } from '../i18n';
-import { icons } from '../icons';
+import { icons, viewBox } from '../icons';
 
 interface Props {
   lang: Lang;
@@ -13,6 +13,7 @@ const home = lang === 'es' ? '/es/' : '/';
 const marquee = [
   'C++20', 'Ruby on Rails', 'Spanner', 'LLVM', 'gRPC', 'Kubernetes',
   'PostgreSQL', 'Bazel', 'Docker', 'GCP', 'Hotwire', 'Astro', 'Python',
+  'Node.js', 'React', 'AWS', 'MongoDB', 'Heroku', 'Kamal', 'Go',
 ];
 ---
 
@@ -138,6 +139,17 @@ available for work → hola@diego.tf</code><code id="term"></code></pre>
               </div>
             </div>
           ))}
+          <div class="langs">
+            <div class="langs-title">{t.about.languages.title}</div>
+            <div class="langs-row">
+              {t.about.languages.items.map((l) => (
+                <div class="lang-chip">
+                  <span class="n">{l.name}</span>
+                  <span class="lv">{l.level}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -154,12 +166,12 @@ available for work → hola@diego.tf</code><code id="term"></code></pre>
           <article class="job glass reveal">
             <div class="job-head">
               <span class={`job-icon i-${job.icon}`} aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="currentColor" set:html={icons[job.icon]} />
+                <svg viewBox={viewBox[job.icon] ?? '0 0 24 24'} fill="currentColor" set:html={icons[job.icon]} />
               </span>
               <h3>{job.role}</h3>
               <div class="org">{job.org}</div>
               <div class="period">{job.period}</div>
-              <div class="place">{job.place}</div>
+              {job.place && <div class="place">{job.place}</div>}
             </div>
             <ul>
               {job.points.map((pt) => (
@@ -169,6 +181,9 @@ available for work → hola@diego.tf</code><code id="term"></code></pre>
           </article>
         ))}
         <div class="edu glass reveal">
+          <span class="edu-icon" aria-hidden="true">
+            <svg viewBox={viewBox.itesm} fill="currentColor" set:html={icons.itesm} />
+          </span>
           <div class="t">{t.experience.education.title}</div>
           <div class="d">{t.experience.education.degree}</div>
           <div class="s">{t.experience.education.school}</div>

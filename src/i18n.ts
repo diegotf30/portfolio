@@ -74,14 +74,21 @@ export const content = {
         'At Google, I owned services handling >300M queries per second (QPS). So every line needed to be thoroughly tested; otherwise things break and people notice. That mindset carried over to my product work.',
         'The company (whose payroll system I built): doesn\'t care about latency graphs, they care that the crew gets paid correctly and on time.',
         'These days I work independently, leaning hard on AI tooling to move at a pace that used to need a team. ',
-        'Spanish native, English fluent, French conversational.',
       ],
+      languages: {
+        title: 'Languages',
+        items: [
+          { name: 'Spanish', level: 'Native' },
+          { name: 'English', level: 'Fluent' },
+          { name: 'French', level: 'Conversational' },
+        ],
+      },
       skills: {
         title: 'Toolkit',
         groups: [
           { label: 'Languages', items: ['C++20', 'Ruby', 'Python 3', 'JavaScript', 'SQL', 'Go'] },
-          { label: 'Frameworks', items: ['Rails 8', 'Hotwire', 'Astro', 'LLVM'] },
-          { label: 'Infra', items: ['PostgreSQL', 'Kubernetes', 'Docker', 'GCP', 'AWS', 'Kamal', 'gRPC', 'Bazel'] },
+          { label: 'Frameworks', items: ['Rails 8', 'Node.js', 'React', 'Astro', 'LLVM'] },
+          { label: 'Infra', items: ['PostgreSQL', 'MongoDB', 'NoSQL', 'Kubernetes', 'Docker', 'GCP', 'AWS', 'Heroku', 'Kamal', 'gRPC', 'Bazel'] },
         ],
       },
     },
@@ -105,7 +112,7 @@ export const content = {
           org: 'Google — Core Data',
           place: 'New York, NY',
           period: 'Sep 2021 — Jan 2026',
-          icon: 'core',
+          icon: 'google',
           points: [
             'Designed a serving strategy for a globally distributed system at 150M QPS: 90% storage cost reduction, 99.99% availability, sub-50ms latency SLO.',
             'Launched a C++20 global bulk upload service processing billions of records daily, cutting client wait times 80%.',
@@ -118,14 +125,23 @@ export const content = {
         },
         {
           role: 'Software Engineering Intern',
+          org: 'Google — Core Data',
+          place: '',
+          period: 'Summer 2020',
+          icon: 'google',
+          points: [
+            'Designed and implemented a high-throughput C++ bulk processing service, adopted by hundreds of internal clients.',
+            'Automated a brittle, manual deletion workflow, reducing large-scale client deletion times from weeks to hours and significantly decreasing on-call operational toil.',
+          ],
+        },
+        {
+          role: 'Software Engineering Intern',
           org: 'Google — Developer Tools',
           place: 'Sunnyvale, CA',
-          period: 'Summer 2019 & 2020',
-          icon: 'tools',
+          period: 'Summer 2019',
+          icon: 'google',
           points: [
             'Created LLVM-Reduce, a C++17 test-case reducer running 10× faster with 3× smaller output than the legacy tool.',
-            'Designed a high-throughput C++ bulk processing service adopted by hundreds of internal clients.',
-            'Automated a brittle manual deletion workflow, taking large-scale client deletions from weeks to hours.',
           ],
         },
       ],
@@ -139,12 +155,12 @@ export const content = {
     contact: {
       kicker: 'Contact',
       title: "Let's build something",
-      body: 'Open to freelance work, contract engineering, and interesting full-time roles. Fastest way to reach me is email.',
+      body: 'Open to freelance work, contract engineering, and interesting full-time roles.',
       email: 'hola@diego.tf',
       links: [
         { label: 'LinkedIn', href: 'https://www.linkedin.com/in/diegotrev/', icon: 'linkedin' },
         { label: 'GitHub', href: 'https://github.com/diegotf30', icon: 'github' },
-        { label: 'Instagram', href: 'https://www.instagram.com/diegotf30/', icon: 'instagram' },
+        { label: 'Résumé', href: '/diego-trevino-cv.pdf', icon: 'cv' },
       ],
     },
   },
@@ -219,14 +235,22 @@ export const content = {
       body: [
         'Escribo software que tiene que aguantar. En Google Core Data fui dueño de servicios con 150M de consultas por segundo — donde un mal deploy es una nota de prensa y donde "hazlo 90% más barato" es un problema real de un trimestre con una respuesta real.',
         'Esa costumbre se me pasa al producto. Renovacreto es un sistema de nómina para una constructora en México: a nadie ahí le importan mis gráficas de latencia, les importa que la cuadrilla cobre bien el viernes. Misma disciplina, otro marcador.',
-        'Hoy trabajo por mi cuenta, apoyándome fuerte en herramientas de IA para avanzar a un ritmo que antes pedía un equipo. Español nativo, inglés fluido, francés conversacional.',
+        'Hoy trabajo por mi cuenta, apoyándome fuerte en herramientas de IA para avanzar a un ritmo que antes pedía un equipo.',
       ],
+      languages: {
+        title: 'Idiomas',
+        items: [
+          { name: 'Español', level: 'Nativo' },
+          { name: 'Inglés', level: 'Fluido' },
+          { name: 'Francés', level: 'Conversacional' },
+        ],
+      },
       skills: {
         title: 'Herramientas',
         groups: [
           { label: 'Lenguajes', items: ['C++20', 'Ruby', 'Python 3', 'JavaScript', 'SQL', 'Go', 'Swift'] },
-          { label: 'Frameworks', items: ['Rails 8', 'Hotwire', 'Astro', 'LLVM'] },
-          { label: 'Infra', items: ['PostgreSQL', 'Kubernetes', 'Docker', 'GCP', 'AWS', 'Kamal', 'gRPC', 'Bazel'] },
+          { label: 'Frameworks', items: ['Rails 8', 'Node.js', 'React', 'Astro', 'LLVM'] },
+          { label: 'Infra', items: ['PostgreSQL', 'MongoDB', 'NoSQL', 'Kubernetes', 'Docker', 'GCP', 'AWS', 'Heroku', 'Kamal', 'gRPC', 'Bazel'] },
         ],
       },
     },
@@ -251,7 +275,7 @@ export const content = {
           org: 'Google — Core Data (Zanzibar)',
           place: 'Nueva York, NY',
           period: 'Sep 2021 — Ene 2026',
-          icon: 'core',
+          icon: 'google',
           points: [
             'Diseñé la estrategia de serving de un sistema distribuido global a 150M QPS: 90% menos costo de almacenamiento, 99.99% de disponibilidad y SLO de latencia bajo 50ms.',
             'Lancé un servicio C++20 de carga masiva global que procesa miles de millones de registros al día, reduciendo 80% los tiempos de espera del cliente.',
@@ -264,14 +288,23 @@ export const content = {
         },
         {
           role: 'Ingeniero de Software (Internado)',
+          org: 'Google — Core Data',
+          place: '',
+          period: 'Verano 2020',
+          icon: 'google',
+          points: [
+            'Diseñé e implementé un servicio C++ de procesamiento masivo de alto throughput, adoptado por cientos de clientes internos.',
+            'Automaticé un flujo manual y frágil de borrado, llevando eliminaciones a gran escala de semanas a horas y reduciendo mucho la carga operativa de on-call.',
+          ],
+        },
+        {
+          role: 'Ingeniero de Software (Internado)',
           org: 'Google — Developer Tools',
           place: 'Sunnyvale, CA',
-          period: 'Veranos 2019 y 2020',
-          icon: 'tools',
+          period: 'Verano 2019',
+          icon: 'google',
           points: [
             'Creé LLVM-Reduce, un reductor de casos de prueba en C++17 10× más rápido y con salidas 3× más chicas que la herramienta anterior.',
-            'Diseñé un servicio C++ de procesamiento masivo de alto throughput adoptado por cientos de clientes internos.',
-            'Automaticé un flujo manual y frágil de borrado, llevando eliminaciones a gran escala de semanas a horas.',
           ],
         },
       ],
@@ -290,7 +323,7 @@ export const content = {
       links: [
         { label: 'LinkedIn', href: 'https://www.linkedin.com/in/diegotrev/', icon: 'linkedin' },
         { label: 'GitHub', href: 'https://github.com/diegotf30', icon: 'github' },
-        { label: 'Instagram', href: 'https://www.instagram.com/diegotf30/', icon: 'instagram' },
+        { label: 'CV', href: '/diego-trevino-cv.pdf', icon: 'cv' },
       ],
     },
   },
