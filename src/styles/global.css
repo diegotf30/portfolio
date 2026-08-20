@@ -198,7 +198,6 @@ ul {
   opacity: var(--o, 0.4);
   transform-style: preserve-3d;
   animation: fall var(--d) linear var(--dl) infinite;
-  will-change: transform, translate;
 }
 
 .mini-cube {
@@ -1219,4 +1218,36 @@ footer {
     opacity: 1;
     transform: none;
   }
+}
+
+/* ---------- lite mode ---------- */
+/* Set by a frame-pacing probe in Layout.astro when the machine can't hold
+   ~48fps — typically GPU acceleration off, so every blur is a CPU
+   convolution. Kills the three costly layers, keeps the look. */
+
+.lite .cube-rain {
+  display: none;
+}
+
+/* radial gradients are already soft; without the 90px blur they still read
+   as glows, at a fraction of the cost, and they stop re-filtering forever */
+.lite .aurora {
+  filter: none;
+  opacity: 0.5;
+}
+
+.lite .aurora span {
+  animation: none;
+}
+
+/* fixed/scrolled backdrop blur is re-sampled every frame; a flat fill isn't */
+.lite .glass,
+.lite .btn-ghost {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: rgba(16, 22, 36, 0.82);
+}
+
+.lite {
+  scroll-behavior: auto;
 }

@@ -53,6 +53,33 @@ const rain = [
     />
     <script is:inline>
       document.documentElement.classList.add('js');
+
+      // Frame-pacing probe. The ambient layers (90px-blurred aurora, 44
+      // spinning cubes, 15 backdrop-filters) are cheap on a GPU and brutal
+      // without one, so count dropped frames and fall back to the lite path.
+      // Background tabs get rAF throttled to a crawl, which looks identical
+      // to a slow machine — so any stall resets the sample instead of
+      // condemning the page.
+      var n = 0;
+      var slow = 0;
+      var last = 0;
+      var step = function (t) {
+        var dt = t - last;
+        if (document.hidden || !last || dt > 200) {
+          n = 0;
+          slow = 0;
+          last = t;
+        } else {
+          last = t;
+          n++;
+          if (dt > 22) slow++;
+        }
+        if (n < 40) requestAnimationFrame(step);
+        else if (slow > 12) document.documentElement.classList.add('lite');
+      };
+      setTimeout(function () {
+        requestAnimationFrame(step);
+      }, 600);
     </script>
   </head>
   <body>
