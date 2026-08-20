@@ -73,13 +73,15 @@ ul {
 
 /* ---------- ambient background ---------- */
 
+/* Three wide colour washes. Deliberately unfiltered: a blur(90px) over this
+   surface re-rendered every frame and was the single biggest cost on
+   machines without GPU acceleration. The gradients are soft enough alone. */
 .aurora {
   position: fixed;
   inset: -25vmax;
   z-index: -2;
   pointer-events: none;
-  filter: blur(90px) saturate(150%);
-  opacity: 0.62;
+  opacity: 0.5;
 }
 
 .aurora span {
@@ -87,7 +89,6 @@ ul {
   display: block;
   border-radius: 50%;
   mix-blend-mode: screen;
-  animation: drift 26s var(--ease) infinite alternate;
 }
 
 .aurora span:nth-child(1) {
@@ -104,8 +105,6 @@ ul {
   right: 2%;
   top: 8%;
   background: radial-gradient(circle, rgba(150, 90, 255, 0.4), transparent 62%);
-  animation-duration: 33s;
-  animation-delay: -8s;
 }
 
 .aurora span:nth-child(3) {
@@ -114,20 +113,7 @@ ul {
   left: 24%;
   bottom: -14%;
   background: radial-gradient(circle, rgba(60, 205, 205, 0.3), transparent 62%);
-  animation-duration: 40s;
-  animation-delay: -16s;
 }
-
-@keyframes drift {
-  from {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  to {
-    transform: translate3d(6vmax, 8vmax, 0) scale(1.18);
-  }
-}
-
-/* parallax layers: --sy is scrollY, set once per scroll in JS */
 
 .dots {
   position: fixed;
@@ -149,26 +135,15 @@ ul {
     animation-timeline: scroll(root block);
     --dist: -120px;
   }
-
-  /* The storm is the parallax. `fall` animates transform on its own clock
-     while `drift-up` animates the separate `translate` property against the
-     scroll timeline — two animations, two properties, no conflict. Depth
-     comes free: bigger cubes read as nearer, so they travel further. */
-  .mini {
-    animation:
-      fall var(--d) linear var(--dl) infinite,
-      drift-up linear both;
-    animation-timeline: auto, scroll(root block);
-  }
 }
 
 @keyframes drift-up {
   to {
-    translate: 0 var(--dist, calc(var(--s, 20px) * -16));
+    translate: 0 var(--dist);
   }
 }
 
-/* grain + vignette, sits above aurora, below content */
+/* grain + vignette, sits below content */
 .grain {
   position: fixed;
   inset: 0;
@@ -176,65 +151,6 @@ ul {
   pointer-events: none;
   opacity: 0.5;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
-}
-
-/* ---------- falling cubes ---------- */
-
-.cube-rain {
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
-  overflow: hidden;
-  perspective: 600px;
-}
-
-.mini {
-  position: absolute;
-  left: var(--l);
-  top: 0;
-  width: var(--s);
-  height: var(--s);
-  opacity: var(--o, 0.4);
-  transform-style: preserve-3d;
-  animation: fall var(--d) linear var(--dl) infinite;
-}
-
-.mini-cube {
-  position: absolute;
-  inset: 0;
-  transform-style: preserve-3d;
-  animation: mini-spin calc(var(--d) * 0.38) linear infinite;
-}
-
-.mini i {
-  position: absolute;
-  inset: 0;
-  border: 1px solid rgba(190, 216, 255, 0.3);
-  background: rgba(140, 180, 255, 0.05);
-  border-radius: 3px;
-}
-
-.mini i:nth-child(1) { transform: translateZ(calc(var(--s) / 2)); }
-.mini i:nth-child(2) { transform: rotateY(180deg) translateZ(calc(var(--s) / 2)); }
-.mini i:nth-child(3) { transform: rotateY(90deg) translateZ(calc(var(--s) / 2)); }
-.mini i:nth-child(4) { transform: rotateY(-90deg) translateZ(calc(var(--s) / 2)); }
-.mini i:nth-child(5) { transform: rotateX(90deg) translateZ(calc(var(--s) / 2)); }
-.mini i:nth-child(6) { transform: rotateX(-90deg) translateZ(calc(var(--s) / 2)); }
-
-@keyframes fall {
-  from {
-    transform: translate3d(0, -25vh, 0);
-  }
-  to {
-    transform: translate3d(0, 125vh, 0);
-  }
-}
-
-@keyframes mini-spin {
-  to {
-    transform: rotateX(360deg) rotateY(360deg);
-  }
 }
 
 /* ---------- layout ---------- */
@@ -1133,11 +1049,6 @@ footer {
 /* ---------- responsive ---------- */
 
 @media (max-width: 900px) {
-  /* thin the storm on small screens */
-  .mini:nth-child(even) {
-    display: none;
-  }
-
   .work-grid,
   .about-grid {
     grid-template-columns: 1fr;
@@ -1218,36 +1129,4 @@ footer {
     opacity: 1;
     transform: none;
   }
-}
-
-/* ---------- lite mode ---------- */
-/* Set by a frame-pacing probe in Layout.astro when the machine can't hold
-   ~48fps — typically GPU acceleration off, so every blur is a CPU
-   convolution. Kills the three costly layers, keeps the look. */
-
-.lite .cube-rain {
-  display: none;
-}
-
-/* radial gradients are already soft; without the 90px blur they still read
-   as glows, at a fraction of the cost, and they stop re-filtering forever */
-.lite .aurora {
-  filter: none;
-  opacity: 0.5;
-}
-
-.lite .aurora span {
-  animation: none;
-}
-
-/* fixed/scrolled backdrop blur is re-sampled every frame; a flat fill isn't */
-.lite .glass,
-.lite .btn-ghost {
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  background: rgba(16, 22, 36, 0.82);
-}
-
-.lite {
-  scroll-behavior: auto;
 }
